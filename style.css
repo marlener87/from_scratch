@@ -1,0 +1,40 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier, monospace;
+    list-style: none;
+}
+
+body {
+    text-align: center;
+    margin: 0;
+    color: white;
+    min-height: 200vh;      /* fais 2 fois la taille de l'écran de l'utilisateur */
+}
+
+.box {
+    border: 6px solid white;
+    transition: 0.25s ease;
+    background-color: black;
+    padding: 10px;
+}
+
+p {
+    visibility: hidden;
+    width: 300px;
+    margin: 10px auto 0;
+    opacity: 0;
+    transition: 0.6s;
+    transform: translateX(-200px);
+}
+
+.question-click {
+    background: rgb(47, 47, 47);
+    border-radius: 30px;
+    border: 6px dashed teal;
+}
+
+.show-response {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(0);
+}
