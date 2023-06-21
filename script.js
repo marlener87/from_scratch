@@ -24,7 +24,7 @@ questionContainer.addEventListener("click", () => {
   // questionContainer.classList.add("question-click");
   questionContainer.classList.toggle("question-click");
 });
-console.log(questionContainer);
+// console.log(questionContainer);
 
 btn1.addEventListener("click", () => {
   console.log("Click 1 !");
@@ -135,3 +135,27 @@ document.addEventListener("keypress", (event) => {
   // ring("z");
   ring(event.key);
 });
+
+// -----------------------------------------------------------------------------------------------------
+// la navbar, le scroll
+// Scroll Event
+
+const nav = document.querySelector("nav");
+//console.log(nav);
+
+// les évènements sur le scroll sont avec l'évènement window
+window.addEventListener("scroll", () => {
+  // console.log("Test !");
+  console.log(window.scrollY); // valeur en px qui a été scrollée
+
+  if (window.scrollY > 120) {
+    // si la valeur que l'on a logguée est > à 120px, alors révéler la navigation
+    nav.style.top = 0;
+  } else {
+    // sinon, tu disparaîs
+    nav.style.top = "-55px";
+  }
+});
+
+// --------------------------------------------------------------------------------------------------------
+// les évènements sur les formulaires (input)
