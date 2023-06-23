@@ -42,7 +42,7 @@ btn2.addEventListener("click", () => {
   response.style.background = "red";
 });
 
-// -------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // Mouse Events (les évènements que l'on peut avoir sur la souris)
 // le plus populaire d'entre eux est 'mouse moove'
 // on va commencer par pointer la souris
@@ -87,7 +87,7 @@ response.addEventListener("mouseover", () => {
   response.style.transform = "rotate(2deg)";
 });
 
-//---------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 //keypress event (correspond à l'appui d'une touche du clavier)
 const keypressContainer = document.querySelector(".keypress");
 // console.log(keypressContainer);
@@ -133,10 +133,10 @@ document.addEventListener("keypress", (event) => {
   // ring()
   // se joue suivant la touche sur laquelle on apppuie. On a un fichier m.mp3 et z.mp3, donc les sons se joueront si on appuie sur m ou z
   // ring("z");
-  ring(event.key);
+  if (event.key === "z") ring(event.key);
 });
 
-// -----------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // la navbar, le scroll
 // Scroll Event
 
@@ -157,5 +157,68 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// --------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------------
 // les évènements sur les formulaires (input)
+// Form Events
+const inputName = document.querySelector('input[type="text"]');
+// console.log(inputName);
+const select = document.querySelector("select");
+// console.log(select);
+const form = document.querySelector("form");
+// console.log(form);
+
+// pour stocker ce qui est tapé dans l'input. Boîte réutilisable, que l'on peut utiliser n'importe quand
+let pseudo = "";
+let language = "";
+
+inputName.addEventListener("input", (e) => {
+  // console.log("yes !");
+  // on récupère les datas qu'on met dans la fonction, le paramètre qu'on met dans la fonction
+  // console.log(e.target.value); // pour savoir ce qui est tapé dans l'input
+  pseudo = e.target.value;
+  console.log(pseudo);
+});
+
+select.addEventListener("input", (e) => {
+  // console.log(e);
+  //   console.log(e.target.value);
+  language = e.target.value;
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault(); // méthode permettant de se prémunir du comportement par défaut du navigateur (qui est de changer de page quand on valide le formulaire, on annule ce changement de page)
+
+  // console.log("yes !!!"); // furtif car on change de page
+
+  console.log(cgv.checked);
+  // s'assurer que les CGV soient cochées avant la validation du formulaire
+  if (cgv.checked) {
+    // on affiche le contenu des variables
+    document.querySelector("form > div").innerHTML = `
+    <h3>Pseudo : ${pseudo}</h3>
+    <h4>Langage préféré : ${language}</h4>`;
+  } else {
+    alert("Veuillez accepter les CGV");
+  }
+});
+
+// ------------------------------------------------------------------------------------------------
+// Load Event (se déclenche une fois que toute la page a été chargée)
+window.addEventListener("load", () => {
+  //console.log("document chargé !!!");
+});
+
+// ------------------------------------------------------------------------------------------------
+// forEach
+// const boxes = document.getElementsByClassName("box");
+const boxes = document.querySelectorAll(".box");
+console.log(boxes);
+
+// boxes.addEventListener("click", () => console.log("test")); // boxes.addEventListener is not a funtion      on ne peut pas ajouter un addEventListener sur 3 éléments, il faut les distinguer
+boxes.forEach((box) => {
+  // box représente chaque boxes individuellement
+  box.addEventListener("click", (e) => {
+    // console.log(e.target);
+    e.target.style.transform = "scale(0.7)";
+  });
+});
