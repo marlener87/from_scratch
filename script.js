@@ -47,15 +47,16 @@ btn2.addEventListener("click", () => {
 // le plus populaire d'entre eux est 'mouse moove'
 // on va commencer par pointer la souris
 const mousemove = document.querySelector(".mousemove");
-// console.log(mousemove);
+console.log(mousemove);
 window.addEventListener("mousemove", (e) => {
   mousemove.style.left = e.pageX + "px";
   mousemove.style.top = e.pageY + "px";
 });
 
 // window.addEventListener("mousemove", (e) => {
-//   console.log("MOUSEMOVE !!!");
-//   console.log(e.target);
+//   // console.log("MOUSEMOVE !!!");
+//   //console.log(e.target);
+//   console.log(e.pageX, e.pageY);
 // });
 
 window.addEventListener("mousedown", () => {
@@ -146,7 +147,7 @@ const nav = document.querySelector("nav");
 // les évènements sur le scroll sont avec l'évènement window
 window.addEventListener("scroll", () => {
   // console.log("Test !");
-  console.log(window.scrollY); // valeur en px qui a été scrollée
+  //console.log(window.scrollY); // valeur en px qui a été scrollée
 
   if (window.scrollY > 120) {
     // si la valeur que l'on a logguée est > à 120px, alors révéler la navigation
@@ -221,4 +222,139 @@ boxes.forEach((box) => {
     // console.log(e.target);
     e.target.style.transform = "scale(0.7)";
   });
+});
+
+// ------------------------------------------------------------------------------------------------
+// addEventListener vs onclick/onscroll
+// addEventListener est recommandé car on l'accolle à l'élément que l'on veut
+
+// le onclick n'est pas forcément recommandé car on ne peut pas mettre plusieurs 'onclick' à un élément. Il peut être utilisé directement dans l'HTML à condition qu'il ne soit pas déjà inscrit dans le script.js, mais ça n'est pas recommandé
+// Dans le cas ci-dessous, uniquement le 2ème onclick sera pris en compte. on ne peut pas propager 2 fois le même évènement sur une balise, alors qu'avec le addEventListener, on peut
+// document.body.onclick = function () {
+//   // OU   document.body.onclick = () => {
+//   console.log("click !");
+// };
+// document.body.onclick = function () {
+//   // OU   document.body.onclick = () => {
+//   console.log("scroll !");
+// };
+
+// https://gomakethings.com/what-is-that-third-argument-on-the-vanilla-js-addeventlistener-method-and-when-do-you-need-it/
+// Bubbling => pour déclencher l'évènement à la fin (de base, l'eventListener est paramétré en mode Bubbling)
+document.body.addEventListener(
+  "click",
+  () => {
+    console.log("click 1 !");
+  } // de base, il est sur false
+);
+
+// Usecapture => pour qu'il se déclenche immédiatement
+document.body.addEventListener(
+  "click",
+  () => {
+    console.log("click 2 !");
+  },
+  true
+);
+
+// ------------------------------------------------------------------------------------------------
+// stopPropagation
+// pour arrêter la propagation
+questionContainer.addEventListener("click", (e) => {
+  alert("Test !");
+  e.stopPropagation();
+});
+
+// removeEventListener = pour retirer l'eventListener
+
+// ------------------------------------------------------------------------------------------------
+// BOM (Browser Object Model)
+// console.log(window.innerHeight);
+// console.log(window.scrollY);
+
+// window.open("http://google.com", "cours js", "height=600", "width=800");
+// window.close(); // pour fermer la fenêtre
+
+// Evènements adossés à Window
+// alert("hello !");
+
+// confirm
+btn2.addEventListener("click", () => {
+  confirm("Voulez-vous vraiment fermer la fenêtre ?");
+});
+
+// prompt
+let answer;
+btn1.addEventListener("click", () => {
+  // prompt("Bravo ! Entrez votre nom pour recevoir la récompense :"); // la réponse ne sera pas stockée. Pour la stocker et la récupérer :
+  answer = prompt("Bravo ! Entrez votre nom pour recevoir la récompense :"); // pour voir la réponse, dans la console du navigateur, taper 'console.log(answer)'
+  // OU
+  //questionContainer.innerHTML = "<h3>Bravo " + answer + "</h3>";
+  //questionContainer.innerHTML = `<h3>Bravo ${answer}</h3>`; // ça écrase ce qu'il y a dans questionContainer
+  questionContainer.innerHTML += `<h3>Bravo ${answer}</h3>`; // ça se met à la suite de ce qu'il y a dans questionContainer
+});
+
+// setTimeout = timer, compte à rebours
+setTimeout(() => {
+  // logique à exécuter
+  questionContainer.style.borderRadius = "300px";
+}, 2000);
+
+// setInterval
+// seul, il crée une boucle infinie, pour l'arrêter, il faut le mettre dans une variable et ajouter un évènement pour l'arrêter
+// let interval = setInterval(() => {
+//   document.body.innerHTML += "<div class='box'><h2>Nouvelle Boîte !</h2>";
+// }, 1000);
+// document.body.addEventListener("click", () => {
+//   clearInterval(interval);
+// });
+
+// remove = pour retirer un élément du DOM
+// document.body.addEventListener("click", (e) => {
+//   e.target.remove();
+// });
+
+// location
+// console.log(location.href);
+// console.log(location.host);
+// console.log(location.pathname);
+// console.log(location.search);
+// location.replace("http://google.com");
+
+// navigator
+// on peut obtenir la localisation de l'utilisateur
+// https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
+//console.log(navigator.userAgent);
+// var options = {
+//   enableHighAccuracy: true,
+//   timeout: 5000,
+//   maximumAge: 0,
+// };
+
+// function success(pos) {
+//   var crd = pos.coords;
+
+//   console.log("Votre position actuelle est :");
+//   console.log(`Latitude : ${crd.latitude}`);
+//   console.log(`Longitude : ${crd.longitude}`);
+//   console.log(`La précision est de ${crd.accuracy} mètres.`);
+// }
+
+// function error(err) {
+//   console.warn(`ERREUR (${err.code}): ${err.message}`);
+// }
+
+// navigator.geolocation.getCurrentPosition(success, error, options);
+
+// history
+// console.log(history);
+// window.history.back(); // pour revenir 1 page en arrière
+// history.go(-3); // pour revenir à -n page en arrière
+
+// ------------------------------------------------------------------------------------------------
+// setProperty
+window.addEventListener("mousemove", (e) => {
+  //console.log(e);
+  nav.style.setProperty("--x", e.layerX + "px");
+  nav.style.setProperty("--y", e.layerY + "px");
 });
